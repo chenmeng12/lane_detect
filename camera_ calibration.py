@@ -32,7 +32,8 @@ if __name__ == '__main__':
     object_points, img_points = get_obj_img_points(cal_images)
     for img in cal_images:
         out_img = cal_undistort(img, object_points, img_points)
-        cv2.imshow('out_image', out_img)
+        cv2.namedWindow('Image')
+        cv2.imshow('Image', out_img)
 
     # test_imgs = utils.get_images_by_dir('test_images')
     #
