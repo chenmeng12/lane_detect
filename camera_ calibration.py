@@ -26,6 +26,18 @@ def cal_undistort(img, objpoints, imgpoints):
     dst = cv2.undistort(img, mtx, dist, None, mtx)
     return dst
 
+def display(in_imgs, out_imgs):
+    plt.figure(figsize=(10,10))
+    i = 0
+    j = 1
+    for img1, img2 in zip(in_imgs, out_imgs):
+        plt.subplot(8, 2, j), plt.imshow(img1)
+        j = j + 1
+        plt.subplot(8, 2, j), plt.imshow(img2)
+        j = j + 1
+        i = i + 1
+    plt.show()
+
 
 
 if __name__ == '__main__':
@@ -39,17 +51,7 @@ if __name__ == '__main__':
         img = cal_undistort(img, object_points, img_points)
         undistorted.append(img)
 
-    plt.figure(figsize=(6,6.5))
-    i = 0
-    j = 1
-    for img1, img2 in zip(test_imgs, undistorted):
-
-        plt.subplot(8,2,j), plt.imshow(test_imgs[i])
-        j = j + 1
-        plt.subplot(8,2,j), plt.imshow(undistorted[i])
-        j = j + 1
-        i = i + 1
-    plt.show()
+    display(test_imgs, undistorted)
 
 
 
