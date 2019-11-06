@@ -3,6 +3,7 @@ import numpy as np
 import PIL
 import os
 import utils
+import matplotlib.pyplot as plt
 
 def get_obj_img_points(images, grid=(9,6)):
     object_points = []
@@ -29,17 +30,26 @@ def cal_undistort(img, objpoints, imgpoints):
 
 if __name__ == '__main__':
     cal_images = utils.get_images_by_dir('camera_cal')
-    object_points, img_points = get_obj_img_points(cal_images)
-    for img in cal_images:
-        out_img = cal_undistort(img, object_points, img_points)
-        cv2.namedWindow('Image')
-        cv2.imshow('Image', out_img)
 
-    # test_imgs = utils.get_images_by_dir('test_images')
-    #
-    # undistorted = []
-    # for img in test_imgs:
-    #     img = cal_undistort(img, object_points, img_points)
-    #     undistorted.append(img)
+    object_points, img_points = get_obj_img_points(cal_images)
+    test_imgs = utils.get_images_by_dir('test_images')
+
+    undistorted = []
+    for img in test_imgs:
+        img = cal_undistort(img, object_points, img_points)
+        undistorted.append(img)
+
+    plt.figure(figsize=(6,6.5))
+    i = 0
+    j = 1
+    for img1, img2 in zip(test_imgs, undistorted):
+
+        plt.subplot(8,2,j), plt.imshow(test_imgs[i])
+        j = j + 1
+        plt.subplot(8,2,j), plt.imshow(undistorted[i])
+        j = j + 1
+        i = i + 1
+    plt.show()
+
 
 
