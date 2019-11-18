@@ -1,7 +1,5 @@
 import cv2
 import numpy as np
-import PIL
-import os
 import utils
 import matplotlib.pyplot as plt
 
@@ -26,6 +24,22 @@ def cal_undistort(img, objpoints, imgpoints):
     dst = cv2.undistort(img, mtx, dist, None, mtx)
     return dst
 
+
+def cam_calibration(chechers_path, imgs_path):
+
+    cal_images = utils.get_images_by_dir(chechers_path)
+
+    object_points, img_points = get_obj_img_points(cal_images)
+    imgs = utils.get_images_by_dir(imgs_path)
+
+    undistorted = []
+    for img in imgs:
+        img = cal_undistort(img, object_points, img_points)
+        undistorted.append(img)
+    return imgs, undistorted
+
+
+
 def display(in_imgs, out_imgs):
     plt.figure(figsize=(10,10))
     i = 0
@@ -41,17 +55,11 @@ def display(in_imgs, out_imgs):
 
 
 if __name__ == '__main__':
-    cal_images = utils.get_images_by_dir('camera_cal')
+    checker_path = 'camera_cal'
+    imgs_path = 'test_images'
+    imgs, undistort = cam_calibration(checker_path, imgs_path)
+    display(imgs, undistort)
 
-    object_points, img_points = get_obj_img_points(cal_images)
-    test_imgs = utils.get_images_by_dir('test_images')
-
-    undistorted = []
-    for img in test_imgs:
-        img = cal_undistort(img, object_points, img_points)
-        undistorted.append(img)
-
-    display(test_imgs, undistorted)
 
 
 
