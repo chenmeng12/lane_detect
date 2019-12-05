@@ -59,7 +59,3 @@ if __name__ == '__main__':
     imgs_path = 'test_images'
     imgs, undistort = cam_calibration(checker_path, imgs_path)
     display(imgs, undistort)
-
-
-
-
