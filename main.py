@@ -44,7 +44,10 @@ def main():
 
 
 
-    cam.display(lane_imgs, results)
+    for i in range(len(undistorts)):
+        cv2.imshow('in_image', undistorts[i])
+        cv2.imshow('result', results[i])
+        cv2.waitKey(0)
 
 if __name__ == '__main__':
     main()
