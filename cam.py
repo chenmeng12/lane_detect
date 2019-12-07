@@ -25,18 +25,18 @@ def cal_undistort(img, objpoints, imgpoints):
     return dst
 
 
-def cam_calibration(chechers_path, imgs_path):
+def cam_calibration(chechers_imgs, lane_imgs):
 
-    cal_images = utils.get_images_by_dir(chechers_path)
 
-    object_points, img_points = get_obj_img_points(cal_images)
-    imgs = utils.get_images_by_dir(imgs_path)
+
+    object_points, img_points = get_obj_img_points(chechers_imgs)
+
 
     undistorted = []
-    for img in imgs:
+    for img in lane_imgs:
         img = cal_undistort(img, object_points, img_points)
         undistorted.append(img)
-    return imgs, undistorted
+    return lane_imgs, undistorted
 
 
 
@@ -57,5 +57,7 @@ def display(in_imgs, out_imgs):
 if __name__ == '__main__':
     checker_path = 'camera_cal'
     imgs_path = 'test_images'
-    imgs, undistort = cam_calibration(checker_path, imgs_path)
+    checker_imgs = utils.get_images_by_dir(checker_path)
+    lane_imgs = utils.get_images_by_dir(imgs_path)
+    imgs, undistort = cam_calibration(checker_imgs, lane_imgs)
     display(imgs, undistort)
